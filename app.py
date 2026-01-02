@@ -5,6 +5,8 @@ from werkzeug.utils import secure_filename
 from authlib.integrations.flask_client import OAuth
 from dotenv import load_dotenv
 
+from werkzeug.middleware.proxy_fix import ProxyFix
+
 # Load environment variables
 load_dotenv()
 
@@ -14,8 +16,12 @@ UPLOAD_FOLDER = 'uploads'
 os.makedirs(UPLOAD_FOLDER, exist_ok=True)
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
-# Allow HTTP for OAuth in development
-os.environ['OAUTHLIB_INSECURE_TRANSPORT'] = '1'
+# Use ProxyFix for correct URL generation behind Render's proxy
+app.wsgi_app = ProxyFix(app.wsgi_app, x_for=1, x_proto=1, x_host=1, x_prefix=1)
+
+# Allow HTTP for OAuth ONLY in development
+if os.getenv('FLASK_ENV') == 'development':
+    os.environ['OAUTHLIB_INSECURE_TRANSPORT'] = '1'
 
 # OAuth setup
 oauth = OAuth(app)
