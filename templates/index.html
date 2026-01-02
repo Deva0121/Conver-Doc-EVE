@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>EpubConverter</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body>
+
+  <header>
+    <div class="logo">EpubConverter</div>
+    <nav>
+      <a href="#">HOME</a>
+      <a href="#">ABOUT</a>
+      <a href="#">SERVICES</a>
+      <a href="#">CONTACT</a>
+    </nav>
+  </header>
+
+  <section class="hero">
+    <div class="hero-content">
+      <h1>Convert your EPUB to PDF simply.</h1>
+      <p>A fast, free, and secure way to convert your ebooks to PDF format. Just upload your file and let us handle the
+        rest.</p>
+
+      <div class="converter-form">
+        {% with messages = get_flashed_messages() %}
+        {% if messages %}
+        <div class="flash">
+          {% for message in messages %}
+          <p>{{ message }}</p>
+          {% endfor %}
+        </div>
+        {% endif %}
+        {% endwith %}
+
+        <form method="post" enctype="multipart/form-data">
+          <input type="file" name="file" accept=".epub" required>
+          <button type="submit" class="cta-btn">CONVERT NOW</button>
+        </form>
+      </div>
+
+    </div>
+
+    <div class="hero-image">
+      <img src="{{ url_for('static', filename='hero.png') }}" alt="Workspace">
+      <!-- Optional play button decoration to match reference -->
+      <!-- <div class="play-button"></div> -->
+    </div>
+  </section>
+
+  <section class="features">
+    <div class="feature-item">
+      <div class="feature-icon">&#128161;</div> <!-- Lightbulb icon substitute -->
+      <h3>Intuitive Usage</h3>
+      <p>Simply upload your file and click convert. No complex settings or technical knowledge required.</p>
+    </div>
+
+    <div class="feature-item">
+      <div class="feature-icon">&#9889;</div> <!-- Bolt/Orange icon substitute -->
+      <h3>Fast Processing</h3>
+      <p>Our optimized engine converts your files in seconds, preserving formatting and layout.</p>
+    </div>
+
+    <div class="feature-item">
+      <div class="feature-icon">&#8734;</div> <!-- Infinity icon substitute -->
+      <h3>Limitless Access</h3>
+      <p>Use the tool as many times as you want. Completely free and runs locally on your machine.</p>
+    </div>
+  </section>
+
+</body>
+
+</html>
