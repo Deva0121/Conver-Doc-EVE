@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>EpubConverter - Images to PDF</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body>
+
+    <header>
+        <div class="logo">EpubConverter</div>
+        <nav>
+            <a href="{{ url_for('dashboard') }}">HOME</a>
+            <a href="#">ABOUT</a>
+            <a href="#">SERVICES</a>
+            <a href="#">CONTACT</a>
+            {% if user %}
+            <span style="margin-left: 20px; font-weight: 500;">Hello, {{ user.login }}</span>
+            <a href="{{ url_for('logout') }}" style="color: #d9534f;">LOGOUT</a>
+            {% else %}
+            <a href="{{ url_for('login') }}" style="color: #007bff; font-weight: 600;">LOGIN WITH GITHUB</a>
+            {% endif %}
+        </nav>
+    </header>
+
+    <section class="hero">
+        <div class="hero-content">
+            <h1>Images to PDF Converter</h1>
+            <p>Combine multiple JPG or PNG images into a single PDF file.</p>
+
+            <div class="converter-form">
+                {% with messages = get_flashed_messages() %}
+                {% if messages %}
+                <div class="flash">
+                    {% for message in messages %}
+                    <p>{{ message }}</p>
+                    {% endfor %}
+                </div>
+                {% endif %}
+                {% endwith %}
+
+                {% if user %}
+                <form method="post" enctype="multipart/form-data">
+                    <input type="file" name="files" accept=".jpg,.jpeg,.png" multiple required>
+                    <p style="font-size: 0.8rem; color: #666; margin-top: 5px;">Hold Ctrl/Cmd to select multiple files.
+                    </p>
+                    <button type="submit" class="cta-btn">CREATE PDF</button>
+                </form>
+                {% else %}
+                <div style="text-align: center; padding: 20px;">
+                    <p>Please login to convert files.</p>
+                    <a href="{{ url_for('login') }}" class="cta-btn"
+                        style="text-decoration: none; display: inline-block;">LOGIN NOW</a>
+                </div>
+                {% endif %}
+                <div style="margin-top: 15px; font-size: 0.9em;">
+                    <a href="{{ url_for('dashboard') }}" style="color: #666;">&larr; Back to Tools</a>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="hero-image">
+            <img src="{{ url_for('static', filename='hero.png') }}" alt="Workspace">
+        </div>
+    </section>
+
+</body>
+
+</html>

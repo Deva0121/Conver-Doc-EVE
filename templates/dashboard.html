@@ -1,0 +1,99 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>EpubConverter - Dashboard</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <style>
+        .tools-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+            padding: 40px 5%;
+        }
+
+        .tool-card {
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+            transition: transform 0.3s ease;
+            text-decoration: none;
+            color: inherit;
+            display: block;
+        }
+
+        .tool-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+        }
+
+        .tool-icon {
+            font-size: 2.5rem;
+            color: #007bff;
+            margin-bottom: 20px;
+        }
+
+        .tool-title {
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin-bottom: 10px;
+            color: #222;
+        }
+
+        .tool-desc {
+            color: #666;
+            font-size: 0.95rem;
+        }
+    </style>
+</head>
+
+<body>
+
+    <header>
+        <div class="logo">EpubConverter</div>
+        <nav>
+            <a href="{{ url_for('dashboard') }}">HOME</a>
+            <a href="#">ABOUT</a>
+            <a href="#">SERVICES</a>
+            <a href="#">CONTACT</a>
+            {% if user %}
+            <span style="margin-left: 20px; font-weight: 500;">Hello, {{ user.login }}</span>
+            <a href="{{ url_for('logout') }}" style="color: #d9534f;">LOGOUT</a>
+            {% else %}
+            <a href="{{ url_for('login') }}" style="color: #007bff; font-weight: 600;">LOGIN WITH GITHUB</a>
+            {% endif %}
+        </nav>
+    </header>
+
+    <div style="text-align: center; padding: 60px 20px 20px;">
+        <h1 style="font-size: 2.5rem; font-weight: 600; color: #222;">All-in-One Document Converter</h1>
+        <p style="color: #666; max-width: 600px; margin: 0 auto;">Select a tool below to get started. Fast, free, and
+            secure.</p>
+    </div>
+
+    <div class="tools-grid">
+        <a href="{{ url_for('epub_to_pdf') }}" class="tool-card">
+            <div class="tool-icon">&#128214;</div>
+            <div class="tool-title">EPUB to PDF</div>
+            <div class="tool-desc">Convert your ebook files to PDF format instantly.</div>
+        </a>
+
+        <a href="{{ url_for('pdf_to_text') }}" class="tool-card">
+            <div class="tool-icon">&#128196;</div>
+            <div class="tool-title">PDF to Text</div>
+            <div class="tool-desc">Extract plain text content from your PDF documents.</div>
+        </a>
+
+        <a href="{{ url_for('images_to_pdf') }}" class="tool-card">
+            <div class="tool-icon">&#128444;</div>
+            <div class="tool-title">Images to PDF</div>
+            <div class="tool-desc">Combine multiple images (JPG, PNG) into a single PDF.</div>
+        </a>
+    </div>
+
+</body>
+
+</html>
