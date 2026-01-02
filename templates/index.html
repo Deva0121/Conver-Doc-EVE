@@ -17,6 +17,12 @@
       <a href="#">ABOUT</a>
       <a href="#">SERVICES</a>
       <a href="#">CONTACT</a>
+      {% if user %}
+      <span style="margin-left: 20px; font-weight: 500;">Hello, {{ user.login }}</span>
+      <a href="{{ url_for('logout') }}" style="color: #d9534f;">LOGOUT</a>
+      {% else %}
+      <a href="{{ url_for('login') }}" style="color: #007bff; font-weight: 600;">LOGIN WITH GITHUB</a>
+      {% endif %}
     </nav>
   </header>
 
@@ -37,10 +43,18 @@
         {% endif %}
         {% endwith %}
 
+        {% if user %}
         <form method="post" enctype="multipart/form-data">
           <input type="file" name="file" accept=".epub" required>
           <button type="submit" class="cta-btn">CONVERT NOW</button>
         </form>
+        {% else %}
+        <div style="text-align: center; padding: 20px;">
+          <p>Please login to convert files.</p>
+          <a href="{{ url_for('login') }}" class="cta-btn" style="text-decoration: none; display: inline-block;">LOGIN
+            NOW</a>
+        </div>
+        {% endif %}
       </div>
 
     </div>
